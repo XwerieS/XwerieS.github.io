@@ -1,29 +1,49 @@
+/* =========================================
+   VARIABLES CSS & THEMES
+   ========================================= */
 :root {
-    /* --- COULEURS FACILES A MODIFIER ICI --- */
-    --bg-dark: #121212;       /* Fond principal */
-    --sidebar-bg: #000000;    /* Fond menu gauche */
-    --card-bg: #181818;       /* Fond des cartes */
-    --card-hover: #282828;    /* Fond carte au survol */
-    --text-main: #FFFFFF;     /* Texte blanc */
-    --text-muted: #B3B3B3;    /* Texte gris */
-    --accent: #1DB954;        /* Vert style Spotify */
+    /* --- THEME SOMBRE PAR DEFAUT (Style Spotify) --- */
+    --bg-main: #121212;
+    --sidebar-bg: #000000;
+    --card-bg: #181818;
+    --card-hover: #282828;
+    --text-main: #FFFFFF;
+    --text-muted: #B3B3B3;
+    --accent: #1DB954; /* Vert Spotify */
+    --border-color: #333333;
+    --card-shadow: none;
+    --details-content-bg: #181818;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* --- THEME CLAIR (S'active via JS) --- */
+body.light-theme {
+    --bg-main: #F4F6F8;
+    --sidebar-bg: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --card-hover: #F0F2F5;
+    --text-main: #1A1A1A;
+    --text-muted: #666666;
+    /* On garde le même vert pour l'identité visuelle */
+    --border-color: #E0E0E0;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --details-content-bg: #FAFAFA;
 }
+
+/* =========================================
+   STYLES GENERAUX
+   ========================================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: var(--bg-dark);
+    background-color: var(--bg-main);
     color: var(--text-main);
     display: flex;
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- SIDEBAR (Le menu à gauche) --- */
+/* --- SIDEBAR --- */
 .sidebar {
     width: 240px;
     background-color: var(--sidebar-bg);
@@ -32,135 +52,153 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    border-right: 1px solid var(--border-color);
+    z-index: 10;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
     color: var(--text-main);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .logo span { color: var(--accent); }
 
 .nav-links a {
-    display: block;
+    display: flex; align-items: center; gap: 10px;
     color: var(--text-muted);
     text-decoration: none;
-    padding: 10px 0;
-    font-weight: bold;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    padding: 10px 12px;
+    font-weight: 600;
+    transition: 0.2s;
+    border-radius: 6px;
 }
+.nav-links a:hover { color: var(--text-main); background-color: var(--card-hover); }
 
-.nav-links a:hover {
-    color: var(--text-main);
-}
-
-/* --- CONTENU PRINCIPAL --- */
+/* --- MAIN CONTENT --- */
 .main-content {
-    margin-left: 240px; /* Doit être égal à la largeur de la sidebar */
-    padding: 30px 40px;
+    margin-left: 240px;
+    padding: 40px 50px;
     flex-grow: 1;
-    background: linear-gradient(to bottom, #1e1e1e 0%, var(--bg-dark) 100%);
+    transition: background-color 0.3s ease;
 }
 
-section {
-    margin-bottom: 60px;
-    scroll-margin-top: 20px; /* Pour que le lien ne colle pas au bord */
-}
+section { margin-bottom: 60px; scroll-margin-top: 20px; }
 
 h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
+    font-size: 26px; margin-bottom: 24px; color: var(--text-main);
+    border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
 }
 
-/* --- PROFIL (Section Moi) --- */
+/* --- COMPONENTS --- */
 .profile-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+    display: flex; align-items: center; gap: 30px;
+    background-color: var(--card-bg);
+    padding: 30px; border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 .avatar-placeholder {
-    width: 150px;
-    height: 150px;
-    background-color: #333;
-    border-radius: 50%; /* Rond */
-    box-shadow: 0 4px 60px rgba(0,0,0,0.5);
+    width: 150px; height: 150px; background-color: var(--card-hover);
+    border-radius: 50%; flex-shrink: 0;
 }
 
-/* --- GRILLES (Pour Projets et Compétences) --- */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 24px;
 }
 
 .card {
     background-color: var(--card-bg);
-    padding: 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
-    display: block;
+    padding: 16px; border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer; text-decoration: none;
+    color: var(--text-main); display: block;
+    box-shadow: var(--card-shadow);
+    border: 1px solid transparent;
 }
-
 .card:hover {
     background-color: var(--card-hover);
+    transform: translateY(-4px);
 }
-
 .card-img-placeholder {
-    width: 100%;
-    aspect-ratio: 1/1; /* Carré parfait comme une pochette d'album */
-    background-color: #333;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    position: relative;
-    overflow: hidden;
+    width: 100%; aspect-ratio: 1/1; background-color: var(--card-hover);
+    border-radius: 6px; margin-bottom: 16px;
 }
+.card h3 { font-size: 17px; margin-bottom: 6px; font-weight: 700; }
 
-.card h3 { font-size: 16px; margin-bottom: 8px; }
-.card p { font-size: 14px; color: var(--text-muted); }
-
-/* --- ACCORDEON (Pour Apprentissage par année) --- */
 details {
-    background-color: var(--card-bg);
-    margin-bottom: 10px;
-    border-radius: 5px;
-    overflow: hidden;
+    background-color: var(--card-bg); margin-bottom: 12px;
+    border-radius: 8px; overflow: hidden;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
 }
-
 details summary {
-    padding: 15px;
-    cursor: pointer;
-    font-weight: bold;
-    list-style: none; /* Cache la flèche par défaut */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 18px; cursor: pointer; font-weight: 600;
+    list-style: none; display: flex; justify-content: space-between; color: var(--text-main);
 }
-
-details summary:hover {
-    background-color: var(--card-hover);
-}
-
-details summary::after {
-    content: '+'; 
-    font-size: 20px;
-}
-
-details[open] summary::after {
-    content: '-';
-}
-
+details summary:hover { background-color: var(--card-hover); color: var(--accent); }
+details summary::after { content: '+'; font-size: 20px; color: var(--text-muted); }
+details[open] summary::after { content: '-'; }
 .year-content {
-    padding: 15px;
-    border-top: 1px solid #333;
-    color: var(--text-muted);
+    padding: 20px; border-top: 1px solid var(--border-color);
+    color: var(--text-muted); background-color: var(--details-content-bg);
+    line-height: 1.6;
 }
+
+img { max-width: 100%; height: auto; display: block; border-radius: inherit;}
+
+
+/* =========================================
+   LE BOUTON SLIDER (SWITCH THEME)
+   ========================================= */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 0 12px;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 26px;
+    position: relative;
+    width: 50px;
+}
+
+.theme-switch input { display:none; }
+
+.slider {
+    background-color: #333; /* Couleur de fond du switch sombre */
+    bottom: 0; cursor: pointer; left: 0; position: absolute;
+    right: 0; top: 0; transition: .4s;
+    border-radius: 34px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4px;
+    border: 1px solid #444;
+}
+
+/* Cercle qui bouge */
+.slider::before {
+    background-color: #fff;
+    bottom: 3px; content: ""; height: 20px; left: 3px;
+    position: absolute; transition: .4s; width: 20px;
+    border-radius: 50%; z-index: 2;
+}
+
+/* Si c'est coché (mode clair) */
+input:checked + .slider { background-color: var(--accent); border-color: var(--accent); }
+input:checked + .slider::before { transform: translateX(24px); }
+
+/* Les icônes SVG */
+.icon-sun, .icon-moon { z-index: 1; transition: 0.3s; }
+.icon-moon { color: #B3B3B3; }
+.icon-sun { color: #FFD700; opacity: 0; }
+
+/* Quand on passe en mode clair */
+input:checked ~ .slider .icon-moon { opacity: 0; }
+input:checked ~ .slider .icon-sun { opacity: 1; }
