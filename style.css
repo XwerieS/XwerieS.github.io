@@ -247,6 +247,59 @@ details[open] summary::after { content: '-'; }
     line-height: 1.6;
 }
 
+/* --- STAGE / INTERNSHIP SECTION --- */
+.stage-header {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+}
+
+.grid-stage-identity {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.grid-stage-missions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.card-highlight {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--accent);
+    box-shadow: var(--card-shadow);
+}
+
+.stage-badge {
+    background: rgba(29, 185, 84, 0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.stage-identity-item {
+    background: var(--card-hover);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.stage-identity-item h4 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
 /* =========================================
    5. SWITCH (THEME & LANGUE)
    ========================================= */
